@@ -1,7 +1,9 @@
 package webdriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.locators.RelativeLocator;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -29,7 +31,7 @@ public class Topic_01_Homework {
         driver.findElement(By.name("lastName"));
     }
     @Test
-    public void TC_04_LinkTex(){
+    public void TC_04_LinkText(){
         driver.findElement(By.linkText("Qtrade Privacy Policies."));
 // Lấy hết trong >...<
     }
@@ -73,6 +75,33 @@ public class Topic_01_Homework {
         driver.findElement(By.xpath("//a[text()='Skip to main content']"));
 // có ký tự a đầu câu code kết thúc bằng >...<
         driver.findElement(By.xpath("//input"));
+    }
+    @Test
+    public void TC_09_Relative_Locator(){
+        driver.get("https://sso.sasktel.com/iam/MySasktelEmailEntry");
+        // Element/ By A
+        By passwordTextboxBy = By.cssSelector("re");
+        // Kèm theo thẻ tên ( input )
+        // Element/ By B
+        By RememberMeCheckboxBy= By.id("RemeberMe");
+        // Kèm theo thẻ tên (ìd or class)
+        // có Id thì dùn id để nhận dạng
+        // Element/ By C
+        By forgotUsernameTextLinkBy = By.cssSelector("span.forgot-password");
+
+        // Kèm theo thẻ tên (a trong href)
+        // Element/ By D
+        By signUpButton = By.cssSelector("button.login-button");
+        // ("button.phần class không có khoảng trắng);
+        // Element/ By C
+       WebElement rememberMeLabelText = driver.findElement(RelativeLocator.with(By.tagName("button"))
+                .above(signUpButton)// label đang nằm trên login button
+                .below(passwordTextboxBy) // label nằm dưới password textbox
+                .toLeftOf(RememberMeCheckboxBy)// lable nằm bên phải checkbox
+                .toRightOf(forgotUsernameTextLinkBy)// lable nằm bê trái forgot password
+        );
+
+
     }
     @AfterClass
     public void cleanBrowser() {
